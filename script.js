@@ -87,60 +87,78 @@ let upperCasedCharacters = [
   'Y',
   'Z'
 ];
-
+let userInputToNumber = 0;
 let userPasswordArray = [];
-// Function to prompt user for password options
+let options = ['lowercase', 'uppercase', 'number', 'special'];
+let selectedOptions = []
 
 let objectOfFunctions = {
       
   // I need a return value for userInputToNumber so that I can use it to give the correct length of the password. As of right now I can't add a return just yet as it needs its own code block or it will jump out of the function.
-  userInput(){
-      let lowercase = confirm(`Do you want to include lower case letters?`);
-      let uppercase = confirm(`Do you want to include upper case letters?`);
-      let num = confirm(`Do you want to include numbers?`);
-      let specialchar = confirm(`Do you want to include special characters?`);
-      if (lowercase && uppercase && num && specialchar){
-        this.getPasswordOptions()
-      } else if (lowercase && uppercase && num && specialchar === false){
-        this.getPasswordOptions2
-      } else if (lowercase && uppercase && num === false && specialchar){
-        this.getPasswordOptions3
-      } else if (lowercase && uppercase === false && num && specialchar){
-        this.getPasswordOptions4
-      } else if (){}
-      
+userInputOptions(){
+  
+  selectedOptions = options.filter(function(option) {
+    return confirm(`Do you want to include ${option} characters?`);
+  })
+
+    this.userInputCall();
+},
+ 
+  userInputCall() {
+
+    this.getPasswordOptions(selectedOptions);
+  
+
   },
 
-  getPasswordOptions1() {
+  getPasswordOptions (arr) {
+    
+    const characterLimit = userInputToNumber // This sets the limit for the length of the array. Since this function is pushing the items into the new array I placed it here so that we know there is a limit to the array length.
 
-    userPasswordArray.push(getRandom(lowerCasedCharacters), getRandom(upperCasedCharacters),getRandom(numericCharacters),getRandom(specialCharacters));
-},
-  getPasswordOptions2() {
+    let passwordOptions = {
 
-  userPasswordArray.push(getRandom(lowerCasedCharacters), getRandom(upperCasedCharacters),getRandom(numericCharacters));
-},
-  getPasswordOptions3() {
+      'lowercase': lowerCasedCharacters,
+      'uppercase': upperCasedCharacters,
+      'number': numericCharacters,
+      'special': specialCharacters
+    };
 
-  userPasswordArray.push(getRandom(lowerCasedCharacters), getRandom(upperCasedCharacters),getRandom(specialCharacters));
-},
-  getPasswordOptions4() {
+    
+        while (userPasswordArray.length <= characterLimit) {
+          arr.forEach(function (value) {
+            userPasswordArray.push(getRandom(passwordOptions[value]));
+          });
+        }
+      
+       
+        userPasswordArray = userPasswordArray.slice(0, characterLimit);
+        
+        this.convertArrayToString()
+        
+      },
 
-  userPasswordArray.push(getRandom(lowerCasedCharacters), getRandom(upperCasedCharacters),getRandom(numericCharacters),getRandom(specialCharacters));
-}
+      convertArrayToString(){
+        
+        return console.log(userPasswordArray.join(``));
+      }
+    };
 
-}
-objectOfFunctions.getPasswordOptions()
-console.log(userPasswordArray); // I've reached this point whereby I want to add the return value of each of these functions to an array.
+
+
+
+  
+
+
+
 
 // Function for getting a random element from an array
 function getRandom(arr) {
       let randomItemIndex = Math.floor(Math.random()* arr.length);
-      return arr[randomItemIndex];
-      
+      return arr[randomItemIndex]; 
 }
 
 // Function to generate password with user input
-function generatePassword() {
+function generatePassword(finalArray) {
 
 }
 
@@ -151,12 +169,12 @@ let generateBtn = document.querySelector('#generate');
 function writePassword() {
   
   let startingPoint = prompt(`Select how many characters you want for your password`)
-  let userInputToNumber = parseInt(startingPoint)
+  userInputToNumber = parseInt(startingPoint)
       if (userInputToNumber < 8 || userInputToNumber > 128) {
         alert(`Password should ONLY be between 8 - 128 characters`);
-      } else if (isNaN(userInputToNumber)){
+      } else if (isNaN(userInputToNumber)){       //isNaN() is a useful method for testing if something is a number or not. Just insert the variable you want to test inside the (). It will return a boolean value. Basically this method is asking, is what is inside the() not a number? If its not a number it will return true. however, if it is a number it will return false.
         alert(`You did not enter a number. Please enter a number between 8 - 128`)
-      } else {objectOfFunctions.userInput()}
+      } else {objectOfFunctions.userInputOptions()}
     
   
   let password = generatePassword();
@@ -172,10 +190,6 @@ generateBtn.addEventListener('click', writePassword);
 
 
 
-
-/*
-next create a function to prompt to select if stateent (yes then allow for sleection from lower case array .ask for upper case etc) if no then move to up case*/1
-
 let array =[]
 
 
@@ -185,4 +199,6 @@ function test(){
 
 test()
 console.log(array);
+
+
 
