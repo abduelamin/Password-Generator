@@ -20,9 +20,9 @@ N/A
 
 ## Usage
 
-This webpage is designed to help the user create a unique password based on the criteria they are looking for. You can access the webpage and create your very own password [here]()
+This webpage is designed to help the user create a unique password based on the criteria they are looking for. You can access the webpage and create your very own password [here](https://abduelamin.github.io/Password-Generator/)
 
-
+![image](https://github.com/abduelamin/Password-Generator/assets/149680577/9affe2c3-504a-42e7-95ae-c5b09d706ccc)
 
 ## Contributing
 
