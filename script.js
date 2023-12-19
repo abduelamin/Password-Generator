@@ -94,12 +94,15 @@ let selectedOptions = []
 
 let objectOfFunctions = {
       
-  // I need a return value for userInputToNumber so that I can use it to give the correct length of the password. As of right now I can't add a return just yet as it needs its own code block or it will jump out of the function.
 userInputOptions(){
   
   selectedOptions = options.filter(function(option) {
-    return confirm(`Do you want to include ${option} characters?`);
+    return confirm(`Do you want to include ${option} characters?`) === true; 
   })
+
+
+ 
+  // filter method is used to return a boolean value (true or false), it will only include elements for which the function returns true. For some reason this above filter was displaying the values I clicked 'cancel' i.e. false. So the best way to counter it is that I set out === true to ensure that only selected options with a true value are included in the array. This is a very good learning point that sometimes you need to manually validate if reuslts aren't showing as intended.
 
     this.userInputCall();
 },
@@ -124,14 +127,14 @@ userInputOptions(){
     };
 
     
-        while (userPasswordArray.length <= characterLimit) {
+        for (let i = 0; i < characterLimit; i++) {
           arr.forEach(function (value) {
             userPasswordArray.push(getRandom(passwordOptions[value]));
           });
         }
       
        
-        userPasswordArray = userPasswordArray.slice(0, characterLimit);
+        userPasswordArray = userPasswordArray.slice(0, characterLimit);  // Reason I added this is because for some reason my password would exceed the characterlimit even though the loop is supposed to stop. I need to later on find out why this was the case to prevent future loops from continously running.
         
         this.convertArrayToString()
         
@@ -139,7 +142,9 @@ userInputOptions(){
 
       convertArrayToString(){
         
-        return console.log(userPasswordArray.join(``));
+        let textarea = document.querySelector('#password');
+            textarea.value = userPasswordArray.join('');
+            return alert(`Your new password is ${userPasswordArray.join('')}`)
       }
     };
 
@@ -158,7 +163,7 @@ function getRandom(arr) {
 }
 
 // Function to generate password with user input
-function generatePassword(finalArray) {
+function generatePassword() {
 
 }
 
@@ -172,7 +177,7 @@ function writePassword() {
   userInputToNumber = parseInt(startingPoint)
       if (userInputToNumber < 8 || userInputToNumber > 128) {
         alert(`Password should ONLY be between 8 - 128 characters`);
-      } else if (isNaN(userInputToNumber)){       //isNaN() is a useful method for testing if something is a number or not. Just insert the variable you want to test inside the (). It will return a boolean value. Basically this method is asking, is what is inside the() not a number? If its not a number it will return true. however, if it is a number it will return false.
+      } else if (isNaN(userInputToNumber)){       
         alert(`You did not enter a number. Please enter a number between 8 - 128`)
       } else {objectOfFunctions.userInputOptions()}
     
@@ -190,15 +195,6 @@ generateBtn.addEventListener('click', writePassword);
 
 
 
-let array =[]
-
-
-function test(){
- return array.push(`sonic`, `tails`)
-}
-
-test()
-console.log(array);
 
 
 
